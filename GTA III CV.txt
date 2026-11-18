@@ -1,0 +1,88 @@
+GTA III Hand Gesture Control
+
+
+This is a computer vision based gesture control system
+for GTA 3 (You might be able to use this for other games too since the project doesn't involve
+changing the source code of the game and is totally a separate program). 
+
+A player can activate the game's health cheat using hand gestures 
+captured through laptop's webcam instead of typing cheat codes manually.
+
+The system uses MediaPipe and OpenCV to detect and track hand movements. It recognizes 
+two specific hand gestures: an open palm and a closed fist. The open palm arms 
+the system, while closing the hand triggers the health cheat code.
+
+
+How It Works
+
+
+1. Webcam Input: The webcam captures video frames for processing.
+
+2. Hand Detection: MediaPipe detects the hand and identifies its 21 landmark points.
+
+3. Gesture Recognition: The system analyzes the detected landmarks to classify 
+the hand pose as either an open palm or a closed fist.
+
+4. Gesture Stabilization: A gesture remains stable for a specified duration before being accepted. 
+
+5. System Arming: The user first presents an open palm. This places the gesture 
+controller in an armed state, allowing the next recognized closed-fist gesture to trigger the action.
+
+6. Cheat Activation: When the user closes their hand into a fist, the application uses PyAutoGUI to automatically type GTA III's health cheat code:		"GESUNDHEIT"
+
+7. Cooldown: After activation, a cooldown period prevents repeated inputs from being triggered unintentionally.
+
+
+Gesture Control Logic
+
+The system uses a two-step gesture sequence:
+
+Hand Gesture    | System Response
+Open Palm       | Arms the system
+Closed Fist     | Types the health cheat
+Unstable Gesture| No action
+No Hand Detected| Waits for hand detection
+Cooldown Active | Prevents repeated activation
+
+The system requires an open palm before accepting a closed fist. Therefore, simply showing a closed fist does not activate the cheat.
+
+
+The camera preview also uses background blurring while keeping the detected hand area sharper for privacy.
+
+
+
+Technologies and Libraries
+
+Technology| Purpose
+Python    | Main programming language
+OpenCV    | Webcam capture and image processing
+MediaPipe | Real-time hand detection and landmark tracking
+NumPy     | Image masking and blending
+PyAutoGUI | Automated keyboard input
+
+
+Project Structure
+
+
+4. Activate the gesture control.
+
+- Keep GTA III running.
+- Ensure the game window is focused when the cheat is triggered.
+- Show an open palm to arm the system.
+- Close your hand into a fist.
+- The application automatically types the health cheat code.
+
+Testing
+
+The project includes unit tests for the gesture controller.
+
+The tests cover:
+
+- Palm and fist classification.
+- Hand boundaries and gesture labels.
+- Gesture stabilization and debounce timing.
+- Activation sequence and cooldown behavior.
+
+Run the tests using:
+
+python -m unittest -v
